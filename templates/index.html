@@ -18,15 +18,17 @@
   </head>
   <body style="display: flex; justify-content: center; align-items: center; height: 100vh">
     <div class="mainLayout" style="width: 100%; background: black; height: 100%; display: flex; justify-content: center; align-items: center">
-      <div style="background: white; width: 30%; height: 50%">
-        <div>촬영된 시간</div>
+      <div style="background: white; width: 45%; height: 80%">
+        <div class="time">촬영된 시간</div>
         <div>
           <img class="videos" />
         </div>
       </div>
-      <div style="background: white; width: 30%; height: 50%; display: flex; flex-direction: column">
+      <div style="border: 1px solid"></div>
+      <div style="background: white; width: 45%; height: 80%; display: flex; flex-direction: column">
         <div style="height: 90%">촬영이력 with 사진</div>
-        <div style="height: 10%">{{plugStat}}</div>
+        <div style="border: 1px solid"></div>
+        <div class="plugState" style="height: 10%; display:flex; justify-content:center; align-items: center;">{{plugStat}}</div>
       </div>
     </div>
   </body>
