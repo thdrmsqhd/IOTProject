@@ -17,11 +17,21 @@ socket.on("refreshData", (data) => {
   document.querySelector(".dataList").innerHTML = resultStr;
 });
 
+socket.on("plugStatus", (data) => {
+  const plugStatus = data.plugStatus
+  controlPlugStatus(plugStatus)
+});
+
 document.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     socket.emit("capture");
     console.log("pressed Enter");
   }
+});
+
+document.addEventListener("load", () => {
+  const plugStatus = document.querySelector(".plugState").innerText
+  controlPlugStatus(plugStatus)
 });
 
 setInterval(setTime, 1000);
@@ -42,4 +52,12 @@ function dateFormat(date) {
     "-" +
     (date.getDate() < 9 ? "0" + date.getDate() : date.getDate());
   return dateFormat2;
+}
+
+function controlPlugStatus(plugStatus){
+  if (plugStatus === "ON"){
+    document.querySelector(".plugState").classList.add("green")
+  }else{
+    document.querySelector(".plugState").classList.add("red")
+  }
 }

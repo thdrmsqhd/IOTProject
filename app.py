@@ -3,6 +3,7 @@ from flask_socketio import SocketIO
 import camera
 import plug
 from models import db, FirePrevention
+import base64
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = 'jihye'
@@ -20,8 +21,18 @@ socketio.start_background_task(activeCamara.streaming, socketio, app=app)
 
 @app.route('/')
 def index():
-    datas = FirePrevention.query.all()
-    return render_template('index.html', plugStat=activePlug.plugStatus(), datas=datas)
+    datas = sorted(FirePrevention.query.all(), key=lambda x: x.id, reverse= True)[:10]
+    result = list(
+        map(
+            lambda x: {
+                "id":x.id, 
+                "time": x.time.strftime('%Y-%m-%d %H:%M:%S'), 
+                "picture_file": base64.b64encode(x.picture_file).decode('utf-8')
+                }
+            , datas
+            )
+        )
+    return render_template('index.html', plugStat=activePlug.plugStatus(), datas=result)
 
 
 @socketio.on('capture')
