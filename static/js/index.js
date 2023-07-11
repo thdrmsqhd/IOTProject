@@ -29,10 +29,9 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-document.addEventListener("load", () => {
-  const plugStatus = document.querySelector(".plugState").innerText
-  controlPlugStatus(plugStatus)
-});
+document.addEventListener('load', ()=>{
+  alert("it")
+})
 
 setInterval(setTime, 1000);
 function setTime() {
