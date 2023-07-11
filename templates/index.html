@@ -25,9 +25,7 @@
     <script src="../static/js/index.js"></script>
   </head>
   <body style="display: flex; justify-content: center; align-items: center; height: 100vh">
-    <div class="mainLayout" 
-      style="width: 100%; background: black; height: 100%; display: flex; justify-content: center; align-items: center;"
-    >
+    <div class="mainLayout" style="width: 100%; background: black; height: 100%; display: flex; justify-content: center; align-items: center;">
       <div style="background: white; width: 45%; height: 80%; padding:1%; border-radius: 15px; margin-right: 2%; box-shadow: 5px 5px 10px rgb(149, 148, 148)">
         <div class="time" style="height: 10%;">촬영된 시간</div>
         <div style="display:flex; justify-content:center; align-items:center; height: 90%;">
@@ -40,13 +38,13 @@
           <div class="plugState" style="height: 10%; display: flex; justify-content: center; align-items: center">
             {{plugStat}}
           </div>
-          <div class="plugLight" style="margin-left: 10px; width:20px; height:20px; background: green; border-radius: 50%;"></div>
+          <div class="plugLight" style="margin-left: 10px;"></div>
         </div>
         <div style="border: 1px solid"></div>
         <div style="height: 90%" class="dataList">
           {% for data in datas %}
           <div style="display:flex; justify-content:center; align-items: center; height: 10%;">
-            <div style="width:5%">{{data.id }}</div>
+            <div style="width:5%">{{data.id}}</div>
             <div style="width:40%">{{data.time}}</div>
             <div style="width:55%">
               <img src = "data:image/jpg;base64,{{ data.picture_file }}" />

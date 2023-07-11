@@ -29,9 +29,6 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-document.addEventListener('load', ()=>{
-  alert("it")
-})
 
 setInterval(setTime, 1000);
 function setTime() {
@@ -55,8 +52,8 @@ function dateFormat(date) {
 
 function controlPlugStatus(plugStatus){
   if (plugStatus === "ON"){
-    document.querySelector(".plugState").classList.add("green")
+    document.querySelector(".plugLight").classList.add("green")
   }else{
-    document.querySelector(".plugState").classList.add("red")
+    document.querySelector(".plugLight").classList.add("red")
   }
 }
