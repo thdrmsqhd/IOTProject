@@ -53,7 +53,9 @@ function dateFormat(date) {
 function controlPlugStatus(plugStatus){
   if (plugStatus === "ON"){
     document.querySelector(".plugLight").classList.add("green")
+    document.querySelector(".plugLight").classList.remove("red")
   }else{
     document.querySelector(".plugLight").classList.add("red")
+    document.querySelector(".plugLight").classList.remove("green")
   }
 }

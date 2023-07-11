@@ -38,9 +38,13 @@
           <div class="plugState" style="height: 10%; display: flex; justify-content: center; align-items: center">
             {{plugStat}}
           </div>
-          <div class="plugLight" style="margin-left: 10px;"></div>
+          {% if plugStat == "ON" %}
+            <div class="plugLight green" style="margin-left: 10px;"></div>
+          {% else %}
+            <div class="plugLight red" style="margin-left: 10px;"></div>
+          {% endif %}
         </div>
-        <div style="border: 1px solid"></div>
+        <div style="border: 1px solid; margin-top: 3%;"></div>
         <div style="height: 90%" class="dataList">
           {% for data in datas %}
           <div style="display:flex; justify-content:center; align-items: center; height: 10%;">
