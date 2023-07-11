@@ -11,15 +11,26 @@ socket.on("active", (data) => {
 socket.on("refreshData", (data) => {
   const resultStr = data.datas
     .map((each) => {
-      return `<div>${each.id}, ${each.time}</div>`;
+      const id = each.id;
+      const time = each.time;
+      const picture_file = each.picture_file;
+      return `
+        <div class="dataRow" style="display: flex; justify-content: center; align-items: center; height: 10%; border-bottom: 1px solid">
+          <div style="width: 5%">${id}</div>
+          <div style="width: 40%">${time}</div>
+          <div style="width: 55%">
+            <img src="data:image/jpg;base64,${picture_file}" style="width: 50px; height: 50px" />
+          </div>
+        </div>
+      `;
     })
     .join("");
   document.querySelector(".dataList").innerHTML = resultStr;
 });
 
 socket.on("plugStatus", (data) => {
-  const plugStatus = data.plugStatus
-  controlPlugStatus(plugStatus)
+  const plugStatus = data.plugStatus;
+  controlPlugStatus(plugStatus);
 });
 
 document.addEventListener("keydown", (e) => {
@@ -29,6 +40,33 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+function openImage(imageSrc) {
+  const html = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="UTF-8">
+              <title>Image Viewer</title>
+              <style>
+                img {
+                  display: block;
+                  margin: auto;
+                  max-width: 100%;
+                  max-height: 100%;
+                }
+              </style>
+            </head>
+            <body>
+              <img src="data:image/jpg;base64, ${imageSrc}">
+            </body>
+          </html>
+        `;
+
+  const imageWindow = window.open();
+  imageWindow.document.open();
+  imageWindow.document.write(html);
+  imageWindow.document.close();
+}
 
 setInterval(setTime, 1000);
 function setTime() {
@@ -50,12 +88,12 @@ function dateFormat(date) {
   return dateFormat2;
 }
 
-function controlPlugStatus(plugStatus){
-  if (plugStatus === "ON"){
-    document.querySelector(".plugLight").classList.add("green")
-    document.querySelector(".plugLight").classList.remove("red")
-  }else{
-    document.querySelector(".plugLight").classList.add("red")
-    document.querySelector(".plugLight").classList.remove("green")
+function controlPlugStatus(plugStatus) {
+  if (plugStatus === "ON") {
+    document.querySelector(".plugLight").classList.add("green");
+    document.querySelector(".plugLight").classList.remove("red");
+  } else {
+    document.querySelector(".plugLight").classList.add("red");
+    document.querySelector(".plugLight").classList.remove("green");
   }
 }

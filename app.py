@@ -27,7 +27,7 @@ def index():
             lambda x: {
                 "id":x.id, 
                 "time": x.time.strftime('%Y-%m-%d %H:%M:%S'), 
-                "picture_file": base64.b64encode(x.picture_file).decode('utf-8')
+                "picture_file": x.picture_file
                 }
             , datas
             )
