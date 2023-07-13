@@ -8,13 +8,19 @@ from flask import jsonify
 from models import db, FirePrevention
 import plug
 
+import tensorflow as tf
+from tensorflow import keras
+from keras.applications import imagenet_utils
+import predict
 
 class Camara:
     cap = None
     sense = False
+    resnet50_pre = None
 
     def __init__(self):
         self.setCap()
+        self.resnet50_pre = tf.keras.applications.resnet.ResNet50(weights='imagenet', input_shape=(224,224,3))
 
     def setCap(self):
         self.cap = cv2.VideoCapture(0)  # 노트북 웹캠을 카메라로 사용
@@ -63,13 +69,12 @@ class Camara:
 
                 # 소켓으로 html에 화면을 전송한다.
                 socketio.emit("streaming", {"frame": jpg_as_text})
-                if self.sense is True:
-                    print("it work")
+                # if self.sense is True:
+                predictResult = predict.pred_img(resnet50_pre=self.resnet50_pre, img=frame, imagenet_utils=imagenet_utils)
+                if predictResult:
+                    print(predictResult)
                     self.capture(jpg_as_text, app, socketio)
-                    self.sense = False
-                    #    AI_분석_함수() # 만약 True라면 plugOff, socketio
                     plugService.plugOff()
                     socketio.emit("plugStatus", {"plugStatus": plugService.plugStatus()})
             except Exception as e:
                 pass
-        pass
