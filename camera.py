@@ -12,24 +12,25 @@ import tensorflow as tf
 from tensorflow import keras
 from keras.applications import imagenet_utils
 import predict
+import datetime
 
 class Camara:
     cap = None
     sense = False
     resnet50_pre = None
+    isOFF = False
+    offTime = None
+    restartTime = 5
 
     def __init__(self):
         self.setCap()
         self.resnet50_pre = tf.keras.applications.resnet.ResNet50(weights='imagenet', input_shape=(224,224,3))
+        self.offTime = datetime.datetime.now()
 
     def setCap(self):
         self.cap = cv2.VideoCapture(0)  # 노트북 웹캠을 카메라로 사용
         self.cap.set(3, 320)  # 너비
         self.cap.set(4, 240)  # 높이
-        pass
-
-    def capRelease(self):
-        self.cap.release()
         pass
 
     def capture(self, jpg_as_text, app, socketio):
@@ -75,6 +76,18 @@ class Camara:
                     print(predictResult)
                     self.capture(jpg_as_text, app, socketio)
                     plugService.plugOff()
+                    self.isOFF = True
+                    self.offTime = datetime.datetime.now()
                     socketio.emit("plugStatus", {"plugStatus": plugService.plugStatus()})
+                
+                if plugService.plugStatus() == "OFF":
+                    print(datetime.datetime.now() - self.offTime)
+                    delayTime = self.offTime + datetime.timedelta(seconds=self.restartTime)
+                    if datetime.datetime.now() >= delayTime:
+                        plugService.plugON()
+                        socketio.emit("plugStatus", {"plugStatus": plugService.plugStatus()})
+                        
+                
             except Exception as e:
+                print(e)
                 pass

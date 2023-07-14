@@ -20,10 +20,6 @@ class Camara:
         self.cap.set(3,320) # 너비
         self.cap.set(4,240) # 높이
         pass
-    
-    def capRelease(self):
-        self.cap.release()
-        pass
 
     def capture (self, frame, db:SQLAlchemy, fp, app, FirePrevention, socketio):
         cv2.imwrite('self camera test.jpg', frame) # 사진 저장

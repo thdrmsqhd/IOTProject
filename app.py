@@ -1,9 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, Response
 from flask_socketio import SocketIO
 import camera
 import plug
 from models import db, FirePrevention
 import base64
+import cv2
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = 'jihye'
@@ -32,14 +33,8 @@ def index():
             , datas
             )
         )
-    return render_template('index.html', plugStat=activePlug.plugStatus(), datas=result)
-
-
-@socketio.on('capture')
-def capture():
-    activeCamara.sense = True
-    socketio.emit('active', {'active': activeCamara.sense})
+    return render_template('index2.html', plugStat=activePlug.plugStatus(), datas=result)
 
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=9090, debug=True, allow_unsafe_werkzeug=True )
+    socketio.run(app, host='0.0.0.0', port=9090, allow_unsafe_werkzeug=True )

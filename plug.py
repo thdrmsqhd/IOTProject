@@ -16,6 +16,10 @@ class PlugService:
     def plugOff(self):
         self.p100.turnOff() #Turns the connected plug off
         pass
+    
+    def plugON(self):
+        self.p100.turnOn() #Turns the connected plug on
+        pass
 
     def plugStatus(self):
         return 'ON' if self.p100.getDeviceInfo()['result']['device_on'] else 'OFF'
