@@ -85,7 +85,7 @@ class Camara:
                     delayTime = self.offTime + datetime.timedelta(seconds=self.restartTime)
                     if datetime.datetime.now() >= delayTime:
                         plugService.plugON()
-                        socketio.emit("plugStatus", {"plugStatus": plugService.plugStatus()})
+                        # socketio.emit("plugStatus", {"plugStatus": plugService.plugStatus()})
                         
                 
             except Exception as e:
